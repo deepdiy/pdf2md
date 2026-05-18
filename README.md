@@ -54,6 +54,12 @@ cd <workdir>
 ./pdf2md-<platform> <input.pdf>
 ```
 
+Export full-page layout input images:
+
+```bash
+./pdf2md-<platform> <input.pdf> [output.md] --export-page-image
+```
+
 ### Arguments
 
 | Argument | Description |
@@ -70,6 +76,7 @@ cd <workdir>
 | `--asset-dpi N` | DPI for asset export (default: `150`) |
 | `--page N` | Process only the specified page |
 | `--model-dir PATH` | Path to the model directory (default: `./yolo26n-doclaynet_ncnn_model/`) |
+| `--export-page-image` | Export the full page image used as layout detection input; increase `--detect-dpi` if you need higher-resolution page images |
 
 ## Build from Source
 

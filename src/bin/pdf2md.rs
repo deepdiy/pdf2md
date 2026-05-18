@@ -41,7 +41,7 @@ struct Paragraph {
 fn main() -> Result<()> {
     let mut args = std::env::args().skip(1);
     let pdf_path = PathBuf::from(args.next().ok_or_else(|| {
-        anyhow!("usage: pdf2md <input.pdf> [output.md] [--asset-dir DIR] [--detect-dpi N] [--asset-dpi N] [--page N] [--model-dir PATH]")
+        anyhow!("usage: pdf2md <input.pdf> [output.md] [--asset-dir DIR] [--detect-dpi N] [--asset-dpi N] [--page N] [--model-dir PATH] [--export-page-image]")
     })?);
     let output_path = args
         .next()
@@ -55,6 +55,7 @@ fn main() -> Result<()> {
     let mut detect_dpi = 72.0f32;
     let mut asset_dpi = 150.0f32;
     let mut page_filter: Option<usize> = None;
+    let mut export_page_image = false;
     let mut model_dir = std::env::current_dir()?.join("yolo26n-doclaynet_ncnn_model");
 
     while let Some(flag) = args.next() {
@@ -90,6 +91,7 @@ fn main() -> Result<()> {
                         .ok_or_else(|| anyhow!("--model-dir requires a value"))?,
                 );
             }
+            "--export-page-image" => export_page_image = true,
             other => return Err(anyhow!("unknown flag: {other}")),
         }
     }
@@ -126,6 +128,9 @@ fn main() -> Result<()> {
             detect_h,
             &mut detector_input,
         )?;
+        if export_page_image {
+            save_detect_page_image(&detect_pixmap, page_num, &asset_dir)?;
+        }
         // detect pixmap no longer needed after inference
         drop(detect_pixmap);
 
@@ -151,6 +156,21 @@ fn main() -> Result<()> {
     out.flush()?;
     println!("markdown: {}", output_path.display());
     println!("assets: {}", asset_dir.display());
+    Ok(())
+}
+
+fn save_detect_page_image(detect_pixmap: &Pixmap, page_num: usize, asset_dir: &Path) -> Result<()> {
+    let path = asset_dir.join(format!("page_{:04}_detect_input.png", page_num));
+    let file =
+        File::create(&path).with_context(|| format!("failed to create {}", path.display()))?;
+    PngEncoder::new(file)
+        .write_image(
+            detect_pixmap.samples(),
+            detect_pixmap.width() as u32,
+            detect_pixmap.height() as u32,
+            ColorType::Rgb8.into(),
+        )
+        .with_context(|| format!("failed to save {}", path.display()))?;
     Ok(())
 }
 

@@ -3,8 +3,6 @@ use std::process::Command;
 
 fn main() {
     let target = std::env::var("TARGET").unwrap_or_default();
-    let host = std::env::var("HOST").unwrap_or_default();
-    let is_cross = !target.is_empty() && target != host;
 
     // Always compile ncnn from source as a static library (cached, only once)
     let out_dir = PathBuf::from(std::env::var("OUT_DIR").expect("OUT_DIR not set"));
