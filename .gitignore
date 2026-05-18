@@ -12,3 +12,8 @@ __pycache__/
 DeepSeek_V4.pdf
 yolo26n-doclaynet_ncnn_model/00_simple_paper.pdf
 yolo26n-doclaynet_ncnn_model/model_ncnn.py
+
+# Generated conversion outputs
+*.md
+!README.md
+*_assets/

@@ -175,3 +175,7 @@ curl -X POST "https://pdf2md.deepdiy.net/v1/convert" \
 You can use these class IDs to filter or block specific elements (e.g., Page-header, Footnote) from the output:
 
 `0`: Caption, `1`: Footnote, `2`: Formula, `3`: List-item, `4`: Page-footer, `5`: Page-header, `6`: Picture, `7`: Section-header, `8`: Table, `9`: Text, `10`: Title
+
+## License
+
+MIT License. See [`LICENSE`](./LICENSE).
