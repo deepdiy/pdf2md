@@ -1,0 +1,13 @@
+# Rust build artifacts
+target/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Test files (not needed in repo)
+DeepSeek_V4.pdf
+yolo26n-doclaynet_ncnn_model/00_simple_paper.pdf

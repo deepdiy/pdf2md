@@ -1,0 +1,29 @@
+description: Ultralytics YOLO26n model trained on ../doclaynet-dataset/data.yaml
+author: Ultralytics
+date: '2026-05-02T15:07:31.713147'
+version: 8.4.46
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: Caption
+  1: Footnote
+  10: Title
+  2: Formula
+  3: List-item
+  4: Page-footer
+  5: Page-header
+  6: Picture
+  7: Section-header
+  8: Table
+  9: Text
+args:
+  batch: 1
+  half: true
+channels: 3
+end2end: false
